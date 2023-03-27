@@ -1,11 +1,14 @@
-import { createGlobalStyle } from 'styled-components';
-import reset from 'styled-reset';
+import { createGlobalStyle } from "styled-components";
+import reset from "styled-reset";
 
 const GlobalStyle = createGlobalStyle`
   ${reset}
   *{
     box-sizing: border-box;
+    user-select: none;
+    cursor: url(/Normal.cur) 0 0, normal;
   }
+  
   html {
     width: 100%;
     height: 100%;
@@ -22,6 +25,7 @@ const GlobalStyle = createGlobalStyle`
   #root {
     width: 100%;
     height: 100%;
+    
   }
   code {
     font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -35,6 +39,13 @@ const GlobalStyle = createGlobalStyle`
     font: inherit;
     font-size: 14px;
     font-weight: 500;
+  }
+  ::-webkit-scrollbar {
+  width: 4px;
+  }
+  ::-webkit-scrollbar-thumb {
+  background-color: #5e5e5e;
+  border-radius: 4px;
   }
 `;
 
