@@ -1,21 +1,16 @@
 import { useState, useEffect } from "react";
-import { useRecoilState } from "recoil";
 
 // GlobalStyle
-import GlobalStyle from "./styles/GlobalStyle.js";
+import GlobalStyle from "./styles/GlobalStyle";
 
-// RecoilStates
-import { clickedIconState, iconPositionState } from "./states/atom.js";
+import Mainpage from "./pages/Mainpage/Mainpage";
 
 function App() {
-  const [clickedIcon, setClikedIcon] = useRecoilState(clickedIconState);
-  const [iconPosition, setIconPosition] = useRecoilState(iconPositionState);
-
   return (
-    <div>
+    <>
       <GlobalStyle />
-      React Messanger
-    </div>
+      <Mainpage />
+    </>
   );
 }
 
