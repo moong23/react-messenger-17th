@@ -14,6 +14,7 @@ import {
   ChatTopBarBtnDiv,
   ChatTopBarDescDiv,
   ChatTopBarDiv,
+  ChatRoomTimeDiv,
 } from "./ChatPage.element";
 
 import ChatDummy from "../../dummy/dummychat.json";
@@ -21,6 +22,7 @@ import ChatDummy from "../../dummy/dummychat.json";
 const ChatPage = () => {
   const [chatClicked, setChatClicked] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
+  const [inputValid, setInputValid] = useState<boolean>(false);
   const params = useParams();
   const mainRoomRef = useRef<HTMLDivElement>(null);
   const [chatData, setChatData] = useState({
@@ -42,6 +44,7 @@ const ChatPage = () => {
     chatClicked: boolean;
     chatFrom: number;
     msg: string;
+    time: string;
   }
 
   useEffect(() => {
@@ -51,13 +54,23 @@ const ChatPage = () => {
     );
   }, [params.id]);
 
-  const RenderChat = ({ msg, chatFrom, chatClicked }: RCProps) => {
+  const RenderChat = ({ msg, chatFrom, chatClicked, time }: RCProps) => {
+    let timeArr = time.split(":");
+    let hour = Number(timeArr[1]);
+    let min = Number(timeArr[2]).toString().padStart(2, "0");
+    let ampm = "오전";
+    if (hour > 12) {
+      hour -= 12;
+      ampm = "오후";
+    }
+    time = ampm + " " + hour + ":" + min;
     if (chatClicked) {
       return (
         <ChatTextDiv clicked={chatFrom === 1}>
           {chatFrom === 1 && <ChatProfileImg src={"/cat1.png"} />}
           {chatFrom === 0 && <ChatProfileImg src={chatData.img} />}
           <ChatMessageDiv clicked={chatFrom === 1}>{msg}</ChatMessageDiv>
+          <ChatRoomTimeDiv> {time}</ChatRoomTimeDiv>
         </ChatTextDiv>
       );
     } else {
@@ -66,12 +79,18 @@ const ChatPage = () => {
           {chatFrom === 1 && <ChatProfileImg src={"/cat1.png"} />}
           {chatFrom === 0 && <ChatProfileImg src={chatData.img} />}
           <ChatMessageDiv clicked={chatFrom !== 1}>{msg}</ChatMessageDiv>
+          <ChatRoomTimeDiv>{time}</ChatRoomTimeDiv>
         </ChatTextDiv>
       );
     }
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    if (e.target.value.trim() !== "") {
+      setInputValid(true);
+    } else {
+      setInputValid(false);
+    }
     setInputValue(e.target.value);
   };
 
@@ -93,6 +112,7 @@ const ChatPage = () => {
         ],
       });
       setInputValue("");
+      setInputValid(false);
     }
   };
   useEffect(() => {
@@ -142,6 +162,7 @@ const ChatPage = () => {
               msg={chat.msg}
               chatFrom={chat.from}
               chatClicked={chatClicked}
+              time={chat.time}
             />
           );
         })}
@@ -149,7 +170,13 @@ const ChatPage = () => {
       <ChatRoomInputDiv onSubmit={handleSubmit} onKeyPress={handleEnterCheck}>
         <ChatRoomInputTag value={inputValue} onChange={handleInputChange} />
         <ChatRoomBottomDiv>
-          <ChatRoomBottomBtn type="submit">전송</ChatRoomBottomBtn>
+          <ChatRoomBottomBtn
+            disabled={!inputValid}
+            inputValid={inputValid}
+            type="submit"
+          >
+            전송
+          </ChatRoomBottomBtn>
         </ChatRoomBottomDiv>
       </ChatRoomInputDiv>
     </ChatPageContainer>

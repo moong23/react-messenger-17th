@@ -75,6 +75,13 @@ export const ChatMessageDiv = styled.div<CMDProps>`
   padding: 0 8px;
 `;
 
+export const ChatRoomTimeDiv = styled.div`
+  font-size: 12px;
+  align-self: flex-end;
+  margin: 0 8px;
+  color: var(--msg-talk-text);
+`;
+
 export const ChatRoomInputDiv = styled.form`
   height: 160px;
   width: 100%;
@@ -105,10 +112,17 @@ export const ChatRoomBottomDiv = styled.div`
   justify-content: flex-end;
 `;
 
-export const ChatRoomBottomBtn = styled.button`
+interface CRBBProps {
+  inputValid: boolean;
+}
+
+export const ChatRoomBottomBtn = styled.button<CRBBProps>`
   height: 28px;
   width: 60px;
-  background-color: var(--chatroom-mychat);
+  background-color: ${(props) =>
+    props.inputValid
+      ? "var(--chatroom-mychat)"
+      : "var(--chatroom-button-disabled)"};
   border: none;
   border-radius: 6px;
   font-weight: 500;
