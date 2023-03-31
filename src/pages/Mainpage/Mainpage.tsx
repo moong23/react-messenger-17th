@@ -11,6 +11,7 @@ import background_image from "../../assets/background_image.jpg";
 import { MainpageContainer } from "./Mainpage.element";
 import Todopage from "../Todopage/Todopage";
 import MsgPage from "../Msgpage/Msgpage";
+import ChatPage from "../ChatPage/ChatPage";
 import MainIcon from "../../components/MainIcon/MainIcon";
 
 const Mainpage = () => {
@@ -63,13 +64,14 @@ const Mainpage = () => {
         e.pageY < todoIconPosition.top + 100
       ) {
         // setTodoRender(true);
+        window.location.assign("/todo");
       } else if (
         e.pageX > messengerIconPosition.left &&
         e.pageX < messengerIconPosition.left + 76 &&
         e.pageY > messengerIconPosition.top &&
         e.pageY < messengerIconPosition.top + 100
       ) {
-        alert("WIP");
+        window.location.assign("/messenger");
       }
     }
   };
@@ -81,6 +83,7 @@ const Mainpage = () => {
           <Route path="/" element={<></>} />
           <Route path="/todo" element={<Todopage />} />
           <Route path="/messenger" element={<MsgPage />} />
+          <Route path="/chat/:id" element={<ChatPage />} />
         </Routes>
         <MainIcon name="TODO" />
         <MainIcon name="카카오톡" />
