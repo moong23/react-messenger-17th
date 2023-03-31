@@ -8,4 +8,16 @@
   --yellow-tag: #e5bd3f;
   --green-tag: #56b83d;
   --purple-tag: #9e54ba;
+  --msg-sidebar: #e6e6e6;
+  --msg-main: #ffffff;
+  --msg-main-focus: #f2f2f2;
+  --msg-main-hover: #f8f8f8;
+  --msg-red: #ec6752;
+  --msg-time-text: #b3b3b3;
+  --msg-talk-text: #7a7a7a;
+  --chatroom-main: #9fc7b5;
+  --chatroom-yourchat: #ffffff;
+  --chatroom-mychat: #fbe64d;
+  --chatroom-time: #000000;
+  --chatroom-personnel: #758b7f;
 }
