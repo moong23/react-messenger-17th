@@ -2,6 +2,7 @@ import { CardCircle, InputCircle } from "./CircleBtn.element";
 
 import { useRecoilState } from "recoil";
 import { selectedTagState } from "../../states/atom";
+import { useNavigate } from "react-router-dom";
 
 interface CBProps {
   color: string;
@@ -10,6 +11,7 @@ interface CBProps {
 }
 
 const CircleBtn = ({ color, type, name }: CBProps) => {
+  const navigation = useNavigate();
   const [selectedTag, setSelectedTag] = useRecoilState(selectedTagState);
   if (type === "tag") {
     // using type as _type since 'type' is reserved word in input
@@ -23,13 +25,13 @@ const CircleBtn = ({ color, type, name }: CBProps) => {
         onClick={() => setSelectedTag(name || "red")}
       />
     );
+  } else if (color === "red" && type === "button" && name === "back") {
+    return (
+      <CardCircle color={color} type={type} onClick={() => navigation(-1)} />
+    );
   } else if (color === "red" && type === "button") {
     return (
-      <CardCircle
-        color={color}
-        type={type}
-        onClick={() => window.location.assign("/")}
-      />
+      <CardCircle color={color} type={type} onClick={() => navigation("/")} />
     );
   } else {
     return <CardCircle color={color} type={type} />;

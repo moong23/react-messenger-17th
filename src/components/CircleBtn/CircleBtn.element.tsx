@@ -15,13 +15,20 @@ export const CardCircle = styled.div<CCProps>`
   display: inline-block;
   margin: 0 4px;
   align-items: center;
-  width: 10px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
   padding: 1px;
   border-radius: 50%;
   background-color: ${(props) => `var(--${props.color}-${props.type})`};
   &:hover {
     cursor: url(Link.cur) 0 0, pointer;
+    &::before {
+      content: "${(props) => (props.color === "red" ? "x" : "")}";
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 12px;
+    }
   }
 `;
 

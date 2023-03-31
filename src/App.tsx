@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 
 // GlobalStyle
 import GlobalStyle from "./styles/GlobalStyle";
+import "./styles/colors.css";
 
 import Mainpage from "./pages/Mainpage/Mainpage";
 
