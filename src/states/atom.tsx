@@ -25,3 +25,13 @@ export const clickedIconState = atom({
   key: "clickedIconState",
   default: "",
 });
+
+export const selectedTagState = atom({
+  key: "selectedTagState",
+  default: "red",
+});
+
+export const allListState = atom({
+  key: "allListState",
+  default: JSON.parse(localStorage.getItem("todoList") || "null") ?? [],
+});
