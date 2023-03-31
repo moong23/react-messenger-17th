@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 import CircleBtn from "../../components/CircleBtn/CircleBtn";
 import {
@@ -22,6 +22,7 @@ const ChatPage = () => {
   const [chatClicked, setChatClicked] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
   const params = useParams();
+  const mainRoomRef = useRef<HTMLDivElement>(null);
   const [chatData, setChatData] = useState({
     id: 0,
     name: "",
@@ -96,6 +97,8 @@ const ChatPage = () => {
   };
   useEffect(() => {
     localStorage.setItem(`chatData${params.id}`, JSON.stringify(chatData));
+    if (mainRoomRef.current)
+      mainRoomRef.current.scrollTop = mainRoomRef.current.scrollHeight;
   }, [chatData]);
 
   const handleEnterCheck = (e: React.KeyboardEvent<HTMLFormElement>) => {
@@ -131,7 +134,7 @@ const ChatPage = () => {
           )}
         </ChatTopBarDescDiv>
       </ChatTopBarDiv>
-      <ChatRoomMainDiv>
+      <ChatRoomMainDiv ref={mainRoomRef}>
         {chatData.chat.map((chat) => {
           return (
             <RenderChat
