@@ -7,6 +7,7 @@ import {
   MessengerIconPositionState,
   todoOpenState,
   messengerOpenState,
+  priorityState,
 } from "../../states/atom";
 
 import background_image from "../../assets/background_image.jpg";
@@ -23,6 +24,7 @@ const Mainpage = () => {
   const [messengerIconPosition, setMessengerIconPosition] = useRecoilState(
     MessengerIconPositionState
   );
+  const [priority, setPriority] = useRecoilState(priorityState);
   const [clickedIcon, setClickedIcon] = useRecoilState(clickedIconState);
   const resetClickedIcon = useResetRecoilState(clickedIconState);
   const [todoOpen, setTodoOpen] = useRecoilState(todoOpenState);
@@ -70,6 +72,7 @@ const Mainpage = () => {
         // setTodoRender(true);
         // window.location.assign("/todo");
         setTodoOpen(true);
+        setPriority("todo");
       } else if (
         e.pageX > messengerIconPosition.left &&
         e.pageX < messengerIconPosition.left + 76 &&
@@ -78,6 +81,7 @@ const Mainpage = () => {
       ) {
         // window.location.assign("/messenger");
         setMessengerOpen(true);
+        setPriority("messenger");
       }
     }
   };
@@ -85,16 +89,10 @@ const Mainpage = () => {
   return (
     <BrowserRouter>
       <MainpageContainer src={background_image} onClick={handleOnClick}>
+        {todoOpen && <Todopage />}
+        {messengerOpen && <MsgPage />}
         <Routes>
-          <Route
-            path="/"
-            element={
-              <>
-                {todoOpen && <Todopage />}
-                {messengerOpen && <MsgPage />}
-              </>
-            }
-          />
+          <Route path="/" element={<></>} />
           <Route path="/todo" element={<Todopage />} />
           <Route path="/messenger" element={<MsgPage />} />
           <Route path="/chat/:id" element={<ChatPage />} />

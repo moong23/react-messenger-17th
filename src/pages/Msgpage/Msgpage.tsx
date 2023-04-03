@@ -43,6 +43,7 @@ const MsgPage = () => {
   };
 
   const handleDBClick = (id: number) => {
+    setTimeout(() => setPriority("chat"), 0);
     navigate("/chat/" + id);
   };
 

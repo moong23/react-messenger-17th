@@ -18,11 +18,14 @@ import {
 } from "./ChatPage.element";
 
 import ChatDummy from "../../dummy/dummychat.json";
+import { useRecoilState } from "recoil";
+import { priorityState } from "../../states/atom";
 
 const ChatPage = () => {
   const [chatClicked, setChatClicked] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
   const [inputValid, setInputValid] = useState<boolean>(false);
+  const [priority, setPriority] = useRecoilState(priorityState);
   const params = useParams();
   const mainRoomRef = useRef<HTMLDivElement>(null);
   const [chatData, setChatData] = useState({
@@ -54,6 +57,9 @@ const ChatPage = () => {
     );
   }, [params.id]);
 
+  useEffect(() => {
+    console.log(priority);
+  }, [priority]);
   const RenderChat = ({ msg, chatFrom, chatClicked, time }: RCProps) => {
     let timeArr = time.split(":");
     let hour = Number(timeArr[1]);
@@ -132,7 +138,10 @@ const ChatPage = () => {
   };
 
   return (
-    <ChatPageContainer>
+    <ChatPageContainer
+      priority={priority === "chat"}
+      onClick={() => setPriority("chat")}
+    >
       <ChatTopBarDiv onClick={() => setChatClicked(!chatClicked)}>
         <ChatTopBarBtnDiv>
           <CircleBtn color="red" type="button" name="back" />

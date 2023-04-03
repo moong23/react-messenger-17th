@@ -4,7 +4,11 @@ interface CMDProps {
   clicked: boolean;
 }
 
-export const ChatPageContainer = styled.div`
+interface CPCProps {
+  priority: boolean;
+}
+
+export const ChatPageContainer = styled.div<CPCProps>`
   display: flex;
   width: 400px;
   height: 90vh;
@@ -14,7 +18,7 @@ export const ChatPageContainer = styled.div`
   justify-content: center;
   border-radius: 12px;
   box-shadow: rgb(0 0 0 / 37%) 0px 0px 10px 0px;
-  z-index: 2;
+  z-index: ${(props) => (props.priority ? 4 : 2)};
 `;
 
 export const ChatTopBarDiv = styled.div`
