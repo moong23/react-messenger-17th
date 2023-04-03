@@ -5,7 +5,7 @@ const Sidebar = () => {
   return (
     <SidebarContainer>
       <SidebarBtnContainer>
-        <CircleBtn color="red" type="button" />
+        <CircleBtn color="red" type="button" name="messenger" />
         <CircleBtn color="yellow" type="button" />
         <CircleBtn color="green" type="button" />
       </SidebarBtnContainer>

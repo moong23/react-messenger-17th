@@ -5,6 +5,8 @@ import {
   clickedIconState,
   TodoIconPositionState,
   MessengerIconPositionState,
+  todoOpenState,
+  messengerOpenState,
 } from "../../states/atom";
 
 import background_image from "../../assets/background_image.jpg";
@@ -23,6 +25,8 @@ const Mainpage = () => {
   );
   const [clickedIcon, setClickedIcon] = useRecoilState(clickedIconState);
   const resetClickedIcon = useResetRecoilState(clickedIconState);
+  const [todoOpen, setTodoOpen] = useRecoilState(todoOpenState);
+  const [messengerOpen, setMessengerOpen] = useRecoilState(messengerOpenState);
 
   const handleOnClick = (e: React.MouseEvent<HTMLDivElement>) => {
     // 클릭 한번 한 경우
@@ -64,14 +68,16 @@ const Mainpage = () => {
         e.pageY < todoIconPosition.top + 100
       ) {
         // setTodoRender(true);
-        window.location.assign("/todo");
+        // window.location.assign("/todo");
+        setTodoOpen(true);
       } else if (
         e.pageX > messengerIconPosition.left &&
         e.pageX < messengerIconPosition.left + 76 &&
         e.pageY > messengerIconPosition.top &&
         e.pageY < messengerIconPosition.top + 100
       ) {
-        window.location.assign("/messenger");
+        // window.location.assign("/messenger");
+        setMessengerOpen(true);
       }
     }
   };
@@ -80,7 +86,15 @@ const Mainpage = () => {
     <BrowserRouter>
       <MainpageContainer src={background_image} onClick={handleOnClick}>
         <Routes>
-          <Route path="/" element={<></>} />
+          <Route
+            path="/"
+            element={
+              <>
+                {todoOpen && <Todopage />}
+                {messengerOpen && <MsgPage />}
+              </>
+            }
+          />
           <Route path="/todo" element={<Todopage />} />
           <Route path="/messenger" element={<MsgPage />} />
           <Route path="/chat/:id" element={<ChatPage />} />

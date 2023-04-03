@@ -19,6 +19,8 @@ import {
 import { FaCaretDown, FaSearch } from "react-icons/fa";
 
 import ChatDummy from "../../dummy/dummychat.json";
+import { useRecoilState } from "recoil";
+import { priorityState } from "../../states/atom";
 
 interface RMMProps {
   id: number;
@@ -30,6 +32,7 @@ interface RMMProps {
 
 const MsgPage = () => {
   const navigate = useNavigate();
+  const [priority, setPriority] = useRecoilState(priorityState);
   const [clickedChat, setClickedChat] = useState<number>(-1);
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
@@ -45,7 +48,6 @@ const MsgPage = () => {
 
   const RenderMainMsg = ({ id, name, img, text, time }: RMMProps) => {
     let timeArr = time.split(":");
-    console.log(timeArr);
     let hour = Number(timeArr[0].split("T")[1]);
     let min = Number(timeArr[1]);
     let ampm = "오전";
@@ -98,7 +100,10 @@ const MsgPage = () => {
   };
 
   return (
-    <MsgpageContainer>
+    <MsgpageContainer
+      priority={priority === "messenger"}
+      onClick={() => setPriority("messenger")}
+    >
       <Sidebar />
       <MainContainer>
         <RenderChatList />

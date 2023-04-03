@@ -1,7 +1,11 @@
 import { CardCircle, InputCircle } from "./CircleBtn.element";
 
 import { useRecoilState } from "recoil";
-import { selectedTagState } from "../../states/atom";
+import {
+  messengerOpenState,
+  selectedTagState,
+  todoOpenState,
+} from "../../states/atom";
 import { useNavigate } from "react-router-dom";
 
 interface CBProps {
@@ -12,6 +16,8 @@ interface CBProps {
 
 const CircleBtn = ({ color, type, name }: CBProps) => {
   const navigation = useNavigate();
+  const [todoOpen, setTodoOpen] = useRecoilState(todoOpenState);
+  const [messengerOpen, setMessengerOpen] = useRecoilState(messengerOpenState);
   const [selectedTag, setSelectedTag] = useRecoilState(selectedTagState);
   if (type === "tag") {
     // using type as _type since 'type' is reserved word in input
@@ -22,16 +28,28 @@ const CircleBtn = ({ color, type, name }: CBProps) => {
         _type={type}
         name={name}
         selected={selectedTag === name}
-        onClick={() => setSelectedTag(name || "red")}
+        onClick={() => setSelectedTag("red")}
       />
     );
   } else if (color === "red" && type === "button" && name === "back") {
     return (
       <CardCircle color={color} type={type} onClick={() => navigation(-1)} />
     );
-  } else if (color === "red" && type === "button") {
+  } else if (color === "red" && type === "button" && name === "todo") {
     return (
-      <CardCircle color={color} type={type} onClick={() => navigation("/")} />
+      <CardCircle
+        color={color}
+        type={type}
+        onClick={() => setTodoOpen(false)}
+      />
+    );
+  } else if (color === "red" && type === "button" && name === "messenger") {
+    return (
+      <CardCircle
+        color={color}
+        type={type}
+        onClick={() => setMessengerOpen(false)}
+      />
     );
   } else {
     return <CardCircle color={color} type={type} />;
