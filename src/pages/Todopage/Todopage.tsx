@@ -13,6 +13,7 @@ import {
   CardTodoText,
   CardTodoDiv,
 } from "./Todopage.element";
+import { priorityState } from "../../states/atom";
 
 const Todopage = () => {
   interface ListProps {
@@ -23,6 +24,7 @@ const Todopage = () => {
   }
   const [render, setRender] = useState<boolean>(false);
   const [allList, setAllList] = useState<ListProps[]>([]);
+  const [priority, setPriority] = useRecoilState(priorityState);
   const todoList = allList?.filter((item: ListProps) => !item.isDone);
   const doneList = allList?.filter((item: ListProps) => item.isDone);
   // Todopage로 라우팅 된 후 100ms 후에 Todopage의 render state를 true로 변경
@@ -32,9 +34,13 @@ const Todopage = () => {
   }, []);
 
   return (
-    <TodopageContainer render={render}>
+    <TodopageContainer
+      render={render}
+      priority={priority === "todo"}
+      onClick={() => setPriority("todo")}
+    >
       <CardToolBar render={render}>
-        <CircleBtn color="red" type="button" />
+        <CircleBtn color="red" type="button" name="todo" />
         <CircleBtn color="yellow" type="button" />
         <CircleBtn color="green" type="button" />
         {/* TODO: onClick => hoverDiv comes up */}

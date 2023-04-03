@@ -3,7 +3,11 @@ interface MMCProps {
   clicked: boolean;
 }
 
-export const MsgpageContainer = styled.div`
+interface MCProps {
+  priority: boolean;
+}
+
+export const MsgpageContainer = styled.div<MCProps>`
   display: flex;
   width: 400px;
   height: 90vh;
@@ -13,7 +17,7 @@ export const MsgpageContainer = styled.div`
   justify-content: center;
   border-radius: 12px;
   box-shadow: rgb(0 0 0 / 37%) 0px 0px 10px 0px;
-  z-index: 2;
+  z-index: ${(props) => (props.priority ? 3 : 2)};
 `;
 
 export const MainContainer = styled.div`

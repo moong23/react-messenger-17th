@@ -3,16 +3,19 @@ import styled from "styled-components";
 interface TPProps {
   hoverRender?: boolean;
   render: boolean;
+  priority?: boolean;
 }
 
 export const TodopageContainer = styled.div<TPProps>`
   width: ${(props) => (props.render ? "max(300px, 30vw)" : "0")};
   height: ${(props) => (props.render ? "max(500px, 50vw)" : "0")};
-  position: ${(props) => (props.render ? "initial" : "fixed")};
+  position: ${(props) => (props.render ? "absolute" : "fixed")};
+  top: 25%;
+  left: 25%;
   margin: 0 auto;
   background-color: #1e1e1e;
   border-radius: 12px;
-  z-index: 2;
+  z-index: ${(props) => (props.priority ? 3 : 2)};
   visibility: ${(props) => (props.render ? "visible" : "hidden")};
   box-shadow: 0 0 10px 0px #000000;
   transition: width 0.2s, height 0.2s, visibility 0.05s linear 0.15s;

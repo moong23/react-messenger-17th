@@ -48,7 +48,7 @@ export const ChatRoomMainDiv = styled.div`
 `;
 
 export const ChatTextDiv = styled.div<CMDProps>`
-  height: 40px;
+  min-height: 40px;
   width: 100%;
   display: flex;
   flex-direction: ${(props) => (props.clicked ? "row-reverse" : "row")};
@@ -64,7 +64,7 @@ export const ChatProfileImg = styled.img`
 `;
 
 export const ChatMessageDiv = styled.div<CMDProps>`
-  height: 30px;
+  min-height: 30px;
   max-width: 80%;
   background-color: ${(props) =>
     props.clicked ? "var(--chatroom-mychat)" : "var(--chatroom-yourchat)"};
@@ -72,7 +72,9 @@ export const ChatMessageDiv = styled.div<CMDProps>`
     !props.clicked ? "0 8px 8px 8px" : "8px 0 8px 8px"};
   display: flex;
   align-items: center;
-  padding: 0 8px;
+  padding: 8px;
+  word-break: break-all;
+  white-space: pre-wrap;
 `;
 
 export const ChatRoomTimeDiv = styled.div`
