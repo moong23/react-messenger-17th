@@ -1,12 +1,12 @@
 import { atom } from "recoil";
 import { v4 } from "uuid";
 
-interface IconPosition {
+interface DragPosition {
   top: number;
   left: number;
 }
 
-export const TodoIconPositionState = atom<IconPosition>({
+export const TodoIconPositionState = atom<DragPosition>({
   key: `todoIconPositionState${v4()}`,
   default: JSON.parse(localStorage.getItem("iconPosition") || "null") ?? {
     top: 30,
@@ -14,11 +14,37 @@ export const TodoIconPositionState = atom<IconPosition>({
   },
 });
 
-export const MessengerIconPositionState = atom<IconPosition>({
+export const MessengerIconPositionState = atom<DragPosition>({
   key: `messengerIconPositionState${v4()}`,
   default: JSON.parse(localStorage.getItem("iconPosition") || "null") ?? {
     top: 160,
     left: 30,
+  },
+});
+
+export const TodoPagePositionState = atom<DragPosition>({
+  key: `todoPagePositionState${v4()}`,
+  default: JSON.parse(localStorage.getItem("todoPagePosition") || "null") ?? {
+    top: 300,
+    left: 300,
+  },
+});
+
+export const MessengerPagePositionState = atom<DragPosition>({
+  key: `messengerPagePositionState${v4()}`,
+  default: JSON.parse(
+    localStorage.getItem("messengerPagePosition") || "null"
+  ) ?? {
+    top: 500,
+    left: 400,
+  },
+});
+
+export const ChatPagePositionState = atom<DragPosition>({
+  key: `chatPagePositionState${v4()}`,
+  default: JSON.parse(localStorage.getItem("chatPagePosition") || "null") ?? {
+    top: 600,
+    left: 500,
   },
 });
 

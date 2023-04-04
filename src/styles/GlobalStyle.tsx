@@ -19,6 +19,7 @@ const GlobalStyle = createGlobalStyle`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 500;
+    overflow: hidden;
   }
   #root {
     width: 100%;
@@ -41,6 +42,7 @@ const GlobalStyle = createGlobalStyle`
   ::-webkit-scrollbar {
   width: 4px;
   }
+  
   ::-webkit-scrollbar-thumb {
   background-color: #5e5e5e;
   border-radius: 4px;
