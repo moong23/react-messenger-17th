@@ -60,16 +60,23 @@ const ChatPage = () => {
   useEffect(() => {
     console.log(priority);
   }, [priority]);
+
   const RenderChat = ({ msg, chatFrom, chatClicked, time }: RCProps) => {
-    let timeArr = time.split(":");
-    let hour = Number(timeArr[1]);
-    let min = Number(timeArr[2]).toString().padStart(2, "0");
-    let ampm = "오전";
-    if (hour > 12) {
-      hour -= 12;
-      ampm = "오후";
-    }
-    time = ampm + " " + hour + ":" + min;
+    let timeArr = time?.split(":");
+    let daystring = time?.split("오")[0];
+    let day = `${daystring?.split(".")[1]?.trim()}월 ${daystring
+      .split(".")[2]
+      ?.trim()}일`;
+
+    console.log(timeArr[0]?.split(".")[3]?.split(" ")[1]);
+    let hour = Number(timeArr[0]?.split(" ")[1]);
+    let min = Number(timeArr[1])?.toString().padStart(2, "0");
+    let ampm = timeArr[0]?.split(".")[3]?.split(" ")[1];
+
+    time =
+      daystring.trim() === new Date().toLocaleDateString().trim()
+        ? ampm + " " + hour + ":" + min
+        : day;
     if (chatClicked) {
       return (
         <ChatTextDiv clicked={chatFrom === 1}>
@@ -113,7 +120,7 @@ const ChatPage = () => {
             id: chatData.chat.length + 1,
             from: chatClicked ? 1 : 0,
             msg: inputValue,
-            time: new Date().toLocaleTimeString(),
+            time: new Date().toLocaleString(),
           },
         ],
       });

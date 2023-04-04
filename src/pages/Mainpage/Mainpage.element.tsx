@@ -8,4 +8,5 @@ export const MainpageContainer = styled.div<{ src: string }>`
   justify-content: center;
   background-image: url(${(props) => props.src});
   background-size: cover;
+  overflow: hidden;
 `;

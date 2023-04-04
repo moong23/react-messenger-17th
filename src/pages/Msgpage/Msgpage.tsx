@@ -51,11 +51,7 @@ const MsgPage = () => {
     let timeArr = time.split(":");
     let hour = Number(timeArr[0].split("T")[1]);
     let min = Number(timeArr[1]);
-    let ampm = "오전";
-    if (hour > 12) {
-      hour -= 12;
-      ampm = "오후";
-    }
+    let ampm = hour > 12 ? "오후" : "오전";
     time = ampm + " " + hour + ":" + min;
 
     return (
