@@ -21,6 +21,7 @@ import { FaCaretDown, FaSearch } from "react-icons/fa";
 import ChatDummy from "../../dummy/dummychat.json";
 import { useRecoilState } from "recoil";
 import { priorityState } from "../../states/atom";
+import prioritize from "../../hooks/prioritize";
 
 interface RMMProps {
   id: number;
@@ -43,7 +44,7 @@ const MsgPage = () => {
   };
 
   const handleDBClick = (id: number) => {
-    setTimeout(() => setPriority("chat"), 0);
+    setTimeout(() => setPriority(prioritize("chat", priority)), 0);
     navigate("/chat/" + id);
   };
 
@@ -98,8 +99,8 @@ const MsgPage = () => {
 
   return (
     <MsgpageContainer
-      priority={priority === "messenger"}
-      onClick={() => setPriority("messenger")}
+      priority={priority.indexOf("messenger")}
+      onClick={() => setPriority(prioritize("messenger", priority))}
     >
       <Sidebar />
       <MainContainer>

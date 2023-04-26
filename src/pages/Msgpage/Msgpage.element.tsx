@@ -4,7 +4,7 @@ interface MMCProps {
 }
 
 interface MCProps {
-  priority: boolean;
+  priority: number;
 }
 
 export const MsgpageContainer = styled.div<MCProps>`
@@ -20,7 +20,7 @@ export const MsgpageContainer = styled.div<MCProps>`
   justify-content: center;
   border-radius: 12px;
   box-shadow: rgb(0 0 0 / 37%) 0px 0px 10px 0px;
-  z-index: ${(props) => (props.priority ? 3 : 2)};
+  z-index: ${(props) => props.priority};
 `;
 
 export const MainContainer = styled.div`

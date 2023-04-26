@@ -20,6 +20,7 @@ import {
 import ChatDummy from "../../dummy/dummychat.json";
 import { useRecoilState } from "recoil";
 import { priorityState } from "../../states/atom";
+import prioritize from "../../hooks/prioritize";
 
 const ChatPage = () => {
   const [chatClicked, setChatClicked] = useState<boolean>(false);
@@ -28,6 +29,7 @@ const ChatPage = () => {
   const [priority, setPriority] = useRecoilState(priorityState);
   const params = useParams();
   const mainRoomRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const [chatData, setChatData] = useState({
     id: 0,
     name: "",
@@ -132,6 +134,7 @@ const ChatPage = () => {
     localStorage.setItem(`chatData${params.id}`, JSON.stringify(chatData));
     if (mainRoomRef.current)
       mainRoomRef.current.scrollTop = mainRoomRef.current.scrollHeight;
+    inputRef.current?.focus();
   }, [chatData]);
 
   const handleEnterCheck = (e: React.KeyboardEvent<HTMLFormElement>) => {
@@ -146,8 +149,8 @@ const ChatPage = () => {
 
   return (
     <ChatPageContainer
-      priority={priority === "chat"}
-      onClick={() => setPriority("chat")}
+      priority={priority.indexOf("chat")}
+      onClick={() => setPriority(prioritize("chat", priority))}
     >
       <ChatTopBarDiv onClick={() => setChatClicked(!chatClicked)}>
         <ChatTopBarBtnDiv>
@@ -184,7 +187,11 @@ const ChatPage = () => {
         })}
       </ChatRoomMainDiv>
       <ChatRoomInputDiv onSubmit={handleSubmit} onKeyPress={handleEnterCheck}>
-        <ChatRoomInputTag value={inputValue} onChange={handleInputChange} />
+        <ChatRoomInputTag
+          ref={inputRef}
+          value={inputValue}
+          onChange={handleInputChange}
+        />
         <ChatRoomBottomDiv>
           <ChatRoomBottomBtn
             disabled={!inputValid}

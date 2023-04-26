@@ -63,9 +63,9 @@ export const messengerOpenState = atom<boolean>({
   default: false,
 });
 
-export const priorityState = atom<"todo" | "messenger" | "chat">({
+export const priorityState = atom<string[]>({
   key: `priorityState${v4()}`,
-  default: "todo",
+  default: ["todo", "messenger", "chat"],
 });
 
 export const selectedTagState = atom<

@@ -14,6 +14,7 @@ import {
   CardTodoDiv,
 } from "./Todopage.element";
 import { priorityState } from "../../states/atom";
+import prioritize from "../../hooks/prioritize";
 
 const Todopage = () => {
   interface ListProps {
@@ -36,8 +37,8 @@ const Todopage = () => {
   return (
     <TodopageContainer
       render={render}
-      priority={priority === "todo"}
-      onClick={() => setPriority("todo")}
+      priority={priority.indexOf("todo")}
+      onClick={() => setPriority(prioritize("todo", priority))}
     >
       <CardToolBar render={render}>
         <CircleBtn color="red" type="button" name="todo" />
