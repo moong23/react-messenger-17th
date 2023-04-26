@@ -14,9 +14,10 @@ import {
 
 import icon_todo from "../../assets/icon_todo.png";
 import icon_messenger from "../../assets/icon_messenger.png";
+import DragContainer from "../DragContainer/DragContainer";
 
 interface MIProps {
-  name?: string;
+  name: "TODO" | "카카오톡";
 }
 
 interface RIProps {
@@ -34,23 +35,25 @@ const MainIcon = ({ name }: MIProps) => {
 
   const RenderIcon = ({ iconSrc, position }: RIProps) => {
     return (
-      <MainIconContainer position={position}>
-        <MainIconImgDiv clicked={clickedIcon === name}>
-          <MainIconImg src={iconSrc} width="70" height="70" />
-        </MainIconImgDiv>
-        <MainIconSubText clicked={clickedIcon === name}>{name}</MainIconSubText>
-      </MainIconContainer>
+      <DragContainer name={name}>
+        <MainIconContainer>
+          <MainIconImgDiv clicked={clickedIcon === name}>
+            <MainIconImg src={iconSrc} width="70" height="70" />
+          </MainIconImgDiv>
+          <MainIconSubText clicked={clickedIcon === name}>
+            {name}
+          </MainIconSubText>
+        </MainIconContainer>
+      </DragContainer>
     );
   };
 
   if (name === "TODO") {
     return <RenderIcon iconSrc={icon_todo} position={todoIconPosition} />;
-  } else if (name === "카카오톡") {
+  } else {
     return (
       <RenderIcon iconSrc={icon_messenger} position={messengerIconPosition} />
     );
-  } else {
-    return <>WIP</>;
   }
 };
 
