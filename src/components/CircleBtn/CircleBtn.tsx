@@ -15,7 +15,7 @@ interface CBProps {
 }
 
 const CircleBtn = ({ color, type, name }: CBProps) => {
-  const navigation = useNavigate();
+  const navigate = useNavigate();
   const [todoOpen, setTodoOpen] = useRecoilState(todoOpenState);
   const [messengerOpen, setMessengerOpen] = useRecoilState(messengerOpenState);
   const [selectedTag, setSelectedTag] = useRecoilState(selectedTagState);
@@ -33,7 +33,7 @@ const CircleBtn = ({ color, type, name }: CBProps) => {
     );
   } else if (color === "red" && type === "button" && name === "back") {
     return (
-      <CardCircle color={color} type={type} onClick={() => navigation(-1)} />
+      <CardCircle color={color} type={type} onClick={() => navigate("/")} />
     );
   } else if (color === "red" && type === "button" && name === "todo") {
     return (
