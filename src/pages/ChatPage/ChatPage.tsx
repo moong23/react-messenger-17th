@@ -21,6 +21,7 @@ import ChatDummy from "../../dummy/dummychat.json";
 import { useRecoilState } from "recoil";
 import { priorityState } from "../../states/atom";
 import prioritize from "../../hooks/prioritize";
+import DragContainer from "../../components/DragContainer/DragContainer";
 
 interface CDProps {
   id: number;
@@ -161,61 +162,63 @@ const ChatPage = () => {
   };
 
   return (
-    <ChatPageContainer
-      priority={priority.indexOf("chat")}
-      onClick={() => setPriority(prioritize("chat", priority))}
-    >
-      <ChatTopBarDiv onClick={() => setChatClicked(!chatClicked)}>
-        <ChatTopBarBtnDiv>
-          <CircleBtn color="red" type="button" name="back" />
-          <CircleBtn color="yellow" type="button" />
-          <CircleBtn color="green" type="button" />
-        </ChatTopBarBtnDiv>
-        <ChatTopBarDescDiv>
-          {!chatClicked && (
-            <>
-              <ChatProfileImg src={chatData.img} />
-              {chatData.name}
-            </>
-          )}
-          {chatClicked && (
-            <>
-              <ChatProfileImg src={"/cat1.png"} />
-              문기
-            </>
-          )}
-        </ChatTopBarDescDiv>
-      </ChatTopBarDiv>
-      <ChatRoomMainDiv ref={mainRoomRef}>
-        {chatData.chat.map((chat) => {
-          return (
-            <RenderChat
-              key={chat.id}
-              msg={chat.msg}
-              chatFrom={chat.from}
-              chatClicked={chatClicked}
-              time={chat.time}
-            />
-          );
-        })}
-      </ChatRoomMainDiv>
-      <ChatRoomInputDiv onSubmit={handleSubmit} onKeyPress={handleEnterCheck}>
-        <ChatRoomInputTag
-          ref={inputRef}
-          value={inputValue}
-          onChange={handleInputChange}
-        />
-        <ChatRoomBottomDiv>
-          <ChatRoomBottomBtn
-            disabled={!inputValid}
-            inputValid={inputValid}
-            type="submit"
-          >
-            전송
-          </ChatRoomBottomBtn>
-        </ChatRoomBottomDiv>
-      </ChatRoomInputDiv>
-    </ChatPageContainer>
+    <DragContainer name="CHAT_PAGE">
+      <ChatPageContainer
+        priority={priority.indexOf("chat")}
+        onClick={() => setPriority(prioritize("chat", priority))}
+      >
+        <ChatTopBarDiv onClick={() => setChatClicked(!chatClicked)}>
+          <ChatTopBarBtnDiv>
+            <CircleBtn color="red" type="button" name="back" />
+            <CircleBtn color="yellow" type="button" />
+            <CircleBtn color="green" type="button" />
+          </ChatTopBarBtnDiv>
+          <ChatTopBarDescDiv>
+            {!chatClicked && (
+              <>
+                <ChatProfileImg src={chatData.img} />
+                {chatData.name}
+              </>
+            )}
+            {chatClicked && (
+              <>
+                <ChatProfileImg src={"/cat1.png"} />
+                문기
+              </>
+            )}
+          </ChatTopBarDescDiv>
+        </ChatTopBarDiv>
+        <ChatRoomMainDiv ref={mainRoomRef}>
+          {chatData.chat.map((chat) => {
+            return (
+              <RenderChat
+                key={chat.id}
+                msg={chat.msg}
+                chatFrom={chat.from}
+                chatClicked={chatClicked}
+                time={chat.time}
+              />
+            );
+          })}
+        </ChatRoomMainDiv>
+        <ChatRoomInputDiv onSubmit={handleSubmit} onKeyPress={handleEnterCheck}>
+          <ChatRoomInputTag
+            ref={inputRef}
+            value={inputValue}
+            onChange={handleInputChange}
+          />
+          <ChatRoomBottomDiv>
+            <ChatRoomBottomBtn
+              disabled={!inputValid}
+              inputValid={inputValid}
+              type="submit"
+            >
+              전송
+            </ChatRoomBottomBtn>
+          </ChatRoomBottomDiv>
+        </ChatRoomInputDiv>
+      </ChatPageContainer>
+    </DragContainer>
   );
 };
 export default ChatPage;

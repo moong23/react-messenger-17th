@@ -36,7 +36,7 @@ const savePositionToLocalStorage = (
   localStorage.setItem(key, JSON.stringify(value));
 };
 
-const DragContainer: React.FC<DCProps> = ({ name, children }) => {
+const DragContainer = ({ name, children }: DCProps) => {
   const [todoIconPosition, setTodoIconPosition] = useRecoilState(
     TodoIconPositionState
   );
@@ -82,7 +82,7 @@ const DragContainer: React.FC<DCProps> = ({ name, children }) => {
 
   useEffect(() => {
     Object.entries(positionMap).forEach(
-      ([key, [_, setStateFn, localStorageKey]]) => {
+      ([_, [_A, setStateFn, localStorageKey]]) => {
         setStateFn(getPositionFromLocalStorage(localStorageKey, [0, 0]));
       }
     );
