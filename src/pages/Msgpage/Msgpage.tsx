@@ -22,6 +22,7 @@ import ChatDummy from "../../dummy/dummychat.json";
 import { useRecoilState } from "recoil";
 import { priorityState } from "../../states/atom";
 import prioritize from "../../hooks/prioritize";
+import DragContainer from "../../components/DragContainer/DragContainer";
 
 interface RMMProps {
   id: number;
@@ -98,15 +99,17 @@ const MsgPage = () => {
   };
 
   return (
-    <MsgpageContainer
-      priority={priority.indexOf("messenger")}
-      onClick={() => setPriority(prioritize("messenger", priority))}
-    >
-      <Sidebar />
-      <MainContainer>
-        <RenderChatList />
-      </MainContainer>
-    </MsgpageContainer>
+    <DragContainer name="MESSENGER_PAGE">
+      <MsgpageContainer
+        priority={priority.indexOf("messenger")}
+        onClick={() => setPriority(prioritize("messenger", priority))}
+      >
+        <Sidebar />
+        <MainContainer>
+          <RenderChatList />
+        </MainContainer>
+      </MsgpageContainer>
+    </DragContainer>
   );
 };
 

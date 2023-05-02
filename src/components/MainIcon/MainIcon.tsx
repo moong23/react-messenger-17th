@@ -27,6 +27,19 @@ const MainIcon = ({ name }: MIProps) => {
   const [todoOpen, setTodoOpen] = useRecoilState(todoOpenState);
   const [messengerOpen, setMessengerOpen] = useRecoilState(messengerOpenState);
 
+  const handleIconClick = (
+    e: React.MouseEvent<HTMLDivElement>,
+    name: string
+  ) => {
+    if (e.detail >= 2) {
+      if (name === "TODO") {
+        setTodoOpen(!todoOpen);
+      } else if (name === "카카오톡") {
+        setMessengerOpen(!messengerOpen);
+      }
+    }
+  };
+
   const RenderIcon = () => {
     let iconSrc;
     switch (name) {
@@ -41,8 +54,8 @@ const MainIcon = ({ name }: MIProps) => {
         break;
     }
     return (
-      <DragContainer>
-        <MainIconContainer>
+      <DragContainer name={name}>
+        <MainIconContainer onClick={(e) => handleIconClick(e, name)}>
           <MainIconImgDiv clicked={clickedIcon === name}>
             <MainIconImg
               src={iconSrc}
