@@ -1,9 +1,10 @@
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 
 import {
-  TodoIconPositionState,
-  MessengerIconPositionState,
   clickedIconState,
+  priorityState,
+  todoOpenState,
+  messengerOpenState,
 } from "../../states/atom";
 import {
   MainIconContainer,
@@ -20,25 +21,35 @@ interface MIProps {
   name: "TODO" | "카카오톡";
 }
 
-interface RIProps {
-  iconSrc: string;
-  position: {
-    top: number;
-    left: number;
-  };
-}
-
 const MainIcon = ({ name }: MIProps) => {
-  const todoIconPosition = useRecoilValue(TodoIconPositionState);
-  const messengerIconPosition = useRecoilValue(MessengerIconPositionState);
-  const clickedIcon = useRecoilValue(clickedIconState);
+  const [clickedIcon, setClickedIcon] = useRecoilState(clickedIconState);
+  const [priority, setPriority] = useRecoilState(priorityState);
+  const [todoOpen, setTodoOpen] = useRecoilState(todoOpenState);
+  const [messengerOpen, setMessengerOpen] = useRecoilState(messengerOpenState);
 
-  const RenderIcon = ({ iconSrc, position }: RIProps) => {
+  const RenderIcon = () => {
+    let iconSrc;
+    switch (name) {
+      case "TODO":
+        iconSrc = icon_todo;
+        break;
+      case "카카오톡":
+        iconSrc = icon_messenger;
+        break;
+      default:
+        iconSrc = icon_todo;
+        break;
+    }
     return (
-      <DragContainer name={name}>
+      <DragContainer>
         <MainIconContainer>
           <MainIconImgDiv clicked={clickedIcon === name}>
-            <MainIconImg src={iconSrc} width="70" height="70" />
+            <MainIconImg
+              src={iconSrc}
+              width="70"
+              height="70"
+              draggable={false}
+            />
           </MainIconImgDiv>
           <MainIconSubText clicked={clickedIcon === name}>
             {name}
@@ -48,13 +59,7 @@ const MainIcon = ({ name }: MIProps) => {
     );
   };
 
-  if (name === "TODO") {
-    return <RenderIcon iconSrc={icon_todo} position={todoIconPosition} />;
-  } else {
-    return (
-      <RenderIcon iconSrc={icon_messenger} position={messengerIconPosition} />
-    );
-  }
+  return <RenderIcon />;
 };
 
 export default MainIcon;

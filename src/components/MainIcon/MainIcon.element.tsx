@@ -8,16 +8,16 @@ export const MainIconContainer = styled.div`
   width: 76px;
   display: flex;
   flex-direction: column;
-  position: absolute;
   align-items: center;
+  margin-bottom: 20px;
 `;
 
 export const MainIconImgDiv = styled.div<MIIDProps>`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 76px;
-  height: 76px;
+  width: 70px;
+  height: 70px;
   box-sizing: border-box;
   border: ${(props) => (props.clicked ? "2px solid rgb(176 176 176)" : "none")};
   border-radius: 6px;
@@ -25,16 +25,19 @@ export const MainIconImgDiv = styled.div<MIIDProps>`
 `;
 
 export const MainIconImg = styled.img`
-  width: 70px;
+  width: 52px;
+  height: 52px;
   object-fit: cover;
 `;
 
-export const MainIconSubText = styled.p<MIIDProps>`
-  font-size: 18px;
+export const MainIconSubText = styled.div<MIIDProps>`
+  font-size: 14px;
   display: flex;
   padding: 1px 4px;
   justify-content: center;
-  margin-top: 8px;
   border-radius: 4px;
   background-color: ${(props) => (props.clicked ? "#2A62D9" : "")};
+  color: white;
+  font-weight: 600;
+  text-shadow: #404040 0px 1px 3px;
 `;

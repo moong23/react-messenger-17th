@@ -22,6 +22,19 @@ import { useRecoilState } from "recoil";
 import { priorityState } from "../../states/atom";
 import prioritize from "../../hooks/prioritize";
 
+interface CDProps {
+  id: number;
+  name: string;
+  img: string;
+  text: string;
+  chat: {
+    id: number;
+    from: number;
+    msg: string;
+    time: string;
+  }[];
+}
+
 const ChatPage = () => {
   const [chatClicked, setChatClicked] = useState<boolean>(false);
   const [inputValue, setInputValue] = useState<string>("");
@@ -30,7 +43,7 @@ const ChatPage = () => {
   const params = useParams();
   const mainRoomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLTextAreaElement>(null);
-  const [chatData, setChatData] = useState({
+  const [chatData, setChatData] = useState<CDProps>({
     id: 0,
     name: "",
     img: "",
