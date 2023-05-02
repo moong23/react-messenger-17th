@@ -15,7 +15,7 @@ const GlobalStyle = createGlobalStyle`
     width: 100%;
     height: 100%;
     margin: 0;
-    font-family: 'Spoqa Han Sans Neo', 'sans-serif';
+    font-family: 'Apple SD Gothic Neo','Spoqa Han Sans Neo', 'sans-serif';
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     font-weight: 500;
