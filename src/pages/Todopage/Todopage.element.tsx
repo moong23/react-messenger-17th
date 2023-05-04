@@ -3,7 +3,6 @@ import styled from "styled-components";
 interface TPProps {
   hoverRender?: boolean;
   render: boolean;
-  priority?: number;
 }
 
 export const TodopageContainer = styled.div<TPProps>`
@@ -15,7 +14,6 @@ export const TodopageContainer = styled.div<TPProps>`
   margin: 0 auto;
   background-color: #1e1e1e;
   border-radius: 12px;
-  z-index: ${(props) => props.priority};
   visibility: ${(props) => (props.render ? "visible" : "hidden")};
   box-shadow: 0 0 10px 0px #000000;
   transition: width 0.2s, height 0.2s, visibility 0.05s linear 0.15s;

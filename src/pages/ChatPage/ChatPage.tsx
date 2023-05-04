@@ -123,6 +123,12 @@ const ChatPage = () => {
     setInputValue(e.target.value);
   };
 
+  const handleInputClick = (e: React.MouseEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    inputRef.current?.focus();
+  };
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (inputValue.trim() === "") return;
@@ -164,8 +170,7 @@ const ChatPage = () => {
   return (
     <DragContainer name="CHAT_PAGE">
       <ChatPageContainer
-        priority={priority.indexOf("chat")}
-        onClick={() => setPriority(prioritize("chat", priority))}
+        onClick={() => setPriority(prioritize("CHAT_PAGE", priority))}
       >
         <ChatTopBarDiv onClick={() => setChatClicked(!chatClicked)}>
           <ChatTopBarBtnDiv>
@@ -206,6 +211,7 @@ const ChatPage = () => {
             ref={inputRef}
             value={inputValue}
             onChange={handleInputChange}
+            onClick={handleInputClick}
           />
           <ChatRoomBottomDiv>
             <ChatRoomBottomBtn

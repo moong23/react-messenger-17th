@@ -45,7 +45,7 @@ const MsgPage = () => {
   };
 
   const handleDBClick = (id: number) => {
-    setTimeout(() => setPriority(prioritize("chat", priority)), 0);
+    setTimeout(() => setPriority(prioritize("CHAT_PAGE", priority)), 0);
     navigate("/chat/" + id);
   };
 
@@ -76,7 +76,7 @@ const MsgPage = () => {
       <>
         <MainTopBarDiv>
           <MainTopBarSortBtn>
-            채팅 <FaCaretDown size={15} />
+            채팅 <FaCaretDown color="gray" size={15} />
           </MainTopBarSortBtn>
           <MainTopBarIconBtn>
             <FaSearch />
@@ -101,8 +101,7 @@ const MsgPage = () => {
   return (
     <DragContainer name="MESSENGER_PAGE">
       <MsgpageContainer
-        priority={priority.indexOf("messenger")}
-        onClick={() => setPriority(prioritize("messenger", priority))}
+        onClick={() => setPriority(prioritize("MESSENGER_PAGE", priority))}
       >
         <Sidebar />
         <MainContainer>

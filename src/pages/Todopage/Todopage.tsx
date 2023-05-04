@@ -15,6 +15,7 @@ import {
 } from "./Todopage.element";
 import { priorityState } from "../../states/atom";
 import prioritize from "../../hooks/prioritize";
+import DragContainer from "../../components/DragContainer/DragContainer";
 
 const Todopage = () => {
   interface ListProps {
@@ -35,55 +36,56 @@ const Todopage = () => {
   }, []);
 
   return (
-    <TodopageContainer
-      render={render}
-      priority={priority.indexOf("todo")}
-      onClick={() => setPriority(prioritize("todo", priority))}
-    >
-      <CardToolBar render={render}>
-        <CircleBtn color="red" type="button" name="todo" />
-        <CircleBtn color="yellow" type="button" />
-        <CircleBtn color="green" type="button" />
-        {/* TODO: onClick => hoverDiv comes up */}
-        <CardPlusBtn onClick={() => alert("btn")} />
-      </CardToolBar>
-      <CardMainDiv>
-        <NotHoverDiv render={render} hoverRender={false}>
-          <CardTodoText>TODO [{todoList.length}개]</CardTodoText>
-          <CardTodoDiv>
-            {todoList.length > 0 &&
-              todoList.map((item) => {
-                return (
-                  <Todo
-                    key={item.id.toString()}
-                    id={item.id}
-                    content={item.content}
-                    tag={item.tag}
-                    done={item.isDone}
-                  />
-                );
-              })}
-            {/* {todoList.length === 0 && <Todo tag={-1} />} */}
-          </CardTodoDiv>
-          <CardTodoText>DONE [{doneList.length}개]</CardTodoText>
-          <CardTodoDiv>
-            {doneList.length > 0 &&
-              doneList.map((item) => {
-                return (
-                  <Todo
-                    key={item.id.toString()}
-                    id={item.id}
-                    content={item.content}
-                    tag={item.tag}
-                    done={item.isDone}
-                  />
-                );
-              })}
-            {/* {doneList.length === 0 && <Todo tag={-2} />} */}
-          </CardTodoDiv>
-        </NotHoverDiv>
-      </CardMainDiv>
-    </TodopageContainer>
+    <DragContainer name="TODO_PAGE">
+      <TodopageContainer
+        render={render}
+        onClick={() => setPriority(prioritize("TODO_PAGE", priority))}
+      >
+        <CardToolBar render={render}>
+          <CircleBtn color="red" type="button" name="todo" />
+          <CircleBtn color="yellow" type="button" />
+          <CircleBtn color="green" type="button" />
+          {/* TODO: onClick => hoverDiv comes up */}
+          <CardPlusBtn onClick={() => alert("btn")} />
+        </CardToolBar>
+        <CardMainDiv>
+          <NotHoverDiv render={render} hoverRender={false}>
+            <CardTodoText>TODO [{todoList.length}개]</CardTodoText>
+            <CardTodoDiv>
+              {todoList.length > 0 &&
+                todoList.map((item) => {
+                  return (
+                    <Todo
+                      key={item.id.toString()}
+                      id={item.id}
+                      content={item.content}
+                      tag={item.tag}
+                      done={item.isDone}
+                    />
+                  );
+                })}
+              {/* {todoList.length === 0 && <Todo tag={-1} />} */}
+            </CardTodoDiv>
+            <CardTodoText>DONE [{doneList.length}개]</CardTodoText>
+            <CardTodoDiv>
+              {doneList.length > 0 &&
+                doneList.map((item) => {
+                  return (
+                    <Todo
+                      key={item.id.toString()}
+                      id={item.id}
+                      content={item.content}
+                      tag={item.tag}
+                      done={item.isDone}
+                    />
+                  );
+                })}
+              {/* {doneList.length === 0 && <Todo tag={-2} />} */}
+            </CardTodoDiv>
+          </NotHoverDiv>
+        </CardMainDiv>
+      </TodopageContainer>
+    </DragContainer>
   );
 };
 export default Todopage;
