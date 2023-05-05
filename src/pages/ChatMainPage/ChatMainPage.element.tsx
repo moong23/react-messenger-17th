@@ -30,3 +30,23 @@ export const MainUserContainer = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+export const MainUserDiv = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 70px;
+  align-items: center;
+`;
+
+export const MainMsgImg = styled.img`
+  width: 45px;
+  height: 45px;
+  border-radius: 40%;
+  margin: 0 12px 0 20px;
+`;
+
+export const MainMsgName = styled.div`
+  font-size: 16px;
+  font-weight: 500;
+`;
