@@ -12,12 +12,19 @@ import { useRecoilState } from "recoil";
 import { priorityState } from "../../states/atom";
 
 import ChatDummy from "../../dummy/dummychat.json";
-import React from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
+import { useRecoilValue } from "recoil";
+import { searchValueState } from "../../states/atom";
 import { useNavigate } from "react-router-dom";
 import prioritize from "../../hooks/prioritize";
+import SearchContainer from "../../components/SearchContainer/SearchContainer";
 
 const ChatMainPage = () => {
   const navigate = useNavigate();
+  const [searchOpen, setSearchOpen] = useState(false);
+  const searchValue = useRecoilValue(searchValueState);
+  const [renderList, setRenderList] = useState(ChatDummy);
   const [priority, setPriority] = useRecoilState(priorityState);
   const handleClickUser = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
     if (e.detail >= 2) {
@@ -25,16 +32,35 @@ const ChatMainPage = () => {
       setPriority(prioritize("CHAT_PAGE", priority));
     }
   };
+
+  useEffect(() => {
+    console.log(searchValue);
+    if (searchValue === "") {
+      setRenderList(ChatDummy);
+    } else {
+      setRenderList(
+        ChatDummy.filter((item) => {
+          return item.name.includes(searchValue);
+        })
+      );
+    }
+  }, [searchValue]);
+
   return (
     <MainMsgContainer>
       <MainContainer>
         <MainTopBarDiv>
           친구
-          <FaSearch />
+          <FaSearch
+            onClick={() => {
+              setSearchOpen(!searchOpen);
+            }}
+          />
         </MainTopBarDiv>
+        {searchOpen && <SearchContainer />}
         <MainUserContainer>
           <>
-            {ChatDummy.map((chat) => {
+            {renderList.map((chat) => {
               return (
                 <MainUserDiv
                   key={chat.id}

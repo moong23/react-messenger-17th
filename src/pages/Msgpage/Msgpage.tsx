@@ -20,11 +20,16 @@ import { FaCaretDown, FaSearch } from "react-icons/fa";
 
 import ChatDummy from "../../dummy/dummychat.json";
 import { useRecoilState, useRecoilValue } from "recoil";
-import { currentTabState, priorityState } from "../../states/atom";
+import {
+  currentTabState,
+  priorityState,
+  searchValueState,
+} from "../../states/atom";
 import prioritize from "../../hooks/prioritize";
 import DragContainer from "../../components/DragContainer/DragContainer";
 import ChatMainPage from "../ChatMainPage/ChatMainPage";
 import ChatMorePage from "../ChatMorePage/ChatMorePage";
+import SearchContainer from "../../components/SearchContainer/SearchContainer";
 
 interface RMMProps {
   id: number;
@@ -36,6 +41,7 @@ interface RMMProps {
 
 const MsgPage = () => {
   const navigate = useNavigate();
+  const [searchOpen, setSearchOpen] = useState(false);
   const [priority, setPriority] = useRecoilState(priorityState);
   const currentTab = useRecoilValue(currentTabState);
   const [clickedChat, setClickedChat] = useState<number>(-1);
@@ -88,10 +94,11 @@ const MsgPage = () => {
           <MainTopBarSortBtn>
             채팅 <FaCaretDown color="gray" size={15} />
           </MainTopBarSortBtn>
-          <MainTopBarIconBtn>
+          <MainTopBarIconBtn onClick={() => setSearchOpen(!searchOpen)}>
             <FaSearch />
           </MainTopBarIconBtn>
         </MainTopBarDiv>
+        {/* {searchOpen && <SearchContainer />} */}
         {ChatDummy.map((item) => {
           return (
             <RenderMainMsg

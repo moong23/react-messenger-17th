@@ -62,3 +62,8 @@ export const currentTabState = atom({
   key: `currentTabState${v4()}`,
   default: 0,
 });
+
+export const searchValueState = atom({
+  key: `searchValueState${v4()}`,
+  default: "",
+});

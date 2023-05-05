@@ -1,7 +1,7 @@
 [
   {
     "id": 1,
-    "name": "CEOS",
+    "name": "곰",
     "img": "/dall-e-1.png",
     "chat": [
       {
@@ -20,7 +20,7 @@
   },
   {
     "id": 2,
-    "name": "test",
+    "name": "야옹",
     "img": "/cat1.png",
     "chat": [
       {
@@ -39,7 +39,7 @@
   },
   {
     "id": 3,
-    "name": "test",
+    "name": "펭귄",
     "img": "/penguin.avif",
     "chat": [
       {
