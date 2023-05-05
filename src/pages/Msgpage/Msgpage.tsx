@@ -24,6 +24,7 @@ import { currentTabState, priorityState } from "../../states/atom";
 import prioritize from "../../hooks/prioritize";
 import DragContainer from "../../components/DragContainer/DragContainer";
 import ChatMainPage from "../ChatMainPage/ChatMainPage";
+import ChatMorePage from "../ChatMorePage/ChatMorePage";
 
 interface RMMProps {
   id: number;
@@ -119,7 +120,7 @@ const MsgPage = () => {
           ) : currentTab === 1 ? (
             <RenderChatList />
           ) : (
-            <></>
+            <ChatMorePage />
           )}
         </MainContainer>
       </MsgpageContainer>
