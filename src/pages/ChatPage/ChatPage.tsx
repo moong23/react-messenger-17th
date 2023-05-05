@@ -73,18 +73,12 @@ const ChatPage = () => {
     );
   }, [params.id]);
 
-  useEffect(() => {
-    console.log(priority);
-  }, [priority]);
-
   const RenderChat = ({ msg, chatFrom, chatClicked, time }: RCProps) => {
     let timeArr = time?.split(":");
     let daystring = time?.split("오")[0];
     let day = `${daystring?.split(".")[1]?.trim()}월 ${daystring
       .split(".")[2]
       ?.trim()}일`;
-
-    console.log(timeArr[0]?.split(".")[3]?.split(" ")[1]);
     let hour = Number(timeArr[0]?.split(" ")[1]);
     let min = Number(timeArr[1])?.toString().padStart(2, "0");
     let ampm = timeArr[0]?.split(".")[3]?.split(" ")[1];

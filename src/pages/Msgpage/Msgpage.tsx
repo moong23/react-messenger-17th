@@ -19,10 +19,11 @@ import {
 import { FaCaretDown, FaSearch } from "react-icons/fa";
 
 import ChatDummy from "../../dummy/dummychat.json";
-import { useRecoilState } from "recoil";
-import { priorityState } from "../../states/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { currentTabState, priorityState } from "../../states/atom";
 import prioritize from "../../hooks/prioritize";
 import DragContainer from "../../components/DragContainer/DragContainer";
+import ChatMainPage from "../ChatMainPage/ChatMainPage";
 
 interface RMMProps {
   id: number;
@@ -35,6 +36,7 @@ interface RMMProps {
 const MsgPage = () => {
   const navigate = useNavigate();
   const [priority, setPriority] = useRecoilState(priorityState);
+  const currentTab = useRecoilValue(currentTabState);
   const [clickedChat, setClickedChat] = useState<number>(-1);
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
@@ -50,11 +52,18 @@ const MsgPage = () => {
   };
 
   const RenderMainMsg = ({ id, name, img, text, time }: RMMProps) => {
-    let timeArr = time.split(":");
-    let hour = Number(timeArr[0].split("T")[1]);
-    let min = Number(timeArr[1]);
-    let ampm = hour > 12 ? "오후" : "오전";
-    time = ampm + " " + hour + ":" + min;
+    let timeArr = time?.split(":");
+    let daystring = time?.split("오")[0];
+    let day = `${daystring?.split(".")[1]?.trim()}월 ${daystring
+      .split(".")[2]
+      ?.trim()}일`;
+    let hour = Number(timeArr[0]?.split(" ")[1]);
+    let min = Number(timeArr[1])?.toString().padStart(2, "0");
+    let ampm = timeArr[0]?.split(".")[3]?.split(" ")[1];
+    time =
+      daystring.trim() === new Date().toLocaleDateString().trim()
+        ? ampm + " " + hour + ":" + min
+        : day;
 
     return (
       <MainMsgContainer
@@ -105,7 +114,13 @@ const MsgPage = () => {
       >
         <Sidebar />
         <MainContainer>
-          <RenderChatList />
+          {currentTab === 0 ? (
+            <ChatMainPage />
+          ) : currentTab === 1 ? (
+            <RenderChatList />
+          ) : (
+            <></>
+          )}
         </MainContainer>
       </MsgpageContainer>
     </DragContainer>

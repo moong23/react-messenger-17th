@@ -5,9 +5,6 @@ interface MMCProps {
 
 export const MsgpageContainer = styled.div`
   display: flex;
-  position: absolute;
-  top: 4%;
-  left: 30%;
   width: 400px;
   height: 90vh;
   background-color: var(--msg-main);
