@@ -1,3 +1,4 @@
+import React from "react";
 import { useRecoilState } from "recoil";
 
 import {
@@ -23,7 +24,6 @@ interface MIProps {
 
 const MainIcon = ({ name }: MIProps) => {
   const [clickedIcon, setClickedIcon] = useRecoilState(clickedIconState);
-  const [priority, setPriority] = useRecoilState(priorityState);
   const [todoOpen, setTodoOpen] = useRecoilState(todoOpenState);
   const [messengerOpen, setMessengerOpen] = useRecoilState(messengerOpenState);
 
@@ -75,4 +75,4 @@ const MainIcon = ({ name }: MIProps) => {
   return <RenderIcon />;
 };
 
-export default MainIcon;
+export default React.memo(MainIcon);

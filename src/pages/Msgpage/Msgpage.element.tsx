@@ -3,15 +3,8 @@ interface MMCProps {
   clicked: boolean;
 }
 
-interface MCProps {
-  priority: number;
-}
-
-export const MsgpageContainer = styled.div<MCProps>`
+export const MsgpageContainer = styled.div`
   display: flex;
-  position: absolute;
-  top: 4%;
-  left: 30%;
   width: 400px;
   height: 90vh;
   background-color: var(--msg-main);
@@ -20,7 +13,6 @@ export const MsgpageContainer = styled.div<MCProps>`
   justify-content: center;
   border-radius: 12px;
   box-shadow: rgb(0 0 0 / 37%) 0px 0px 10px 0px;
-  z-index: ${(props) => props.priority};
 `;
 
 export const MainContainer = styled.div`
@@ -91,7 +83,7 @@ export const MainMsgDiv = styled.div`
 
 export const MainMsgName = styled.div`
   display: flex;
-  font-weight: 600;
+  font-weight: 500;
   font-size: 14px;
 `;
 

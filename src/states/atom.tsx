@@ -43,7 +43,7 @@ export const messengerOpenState = atom<boolean>({
 
 export const priorityState = atom<string[]>({
   key: `priorityState${v4()}`,
-  default: ["todo", "messenger", "chat"],
+  default: ["TODO_PAGE", "MESSENGER_PAGE", "CHAT_PAGE"],
 });
 
 export const selectedTagState = atom<
@@ -56,4 +56,14 @@ export const selectedTagState = atom<
 export const allListState = atom({
   key: `allListState${v4()}`,
   default: JSON.parse(localStorage.getItem("todoList") || "null") ?? [],
+});
+
+export const currentTabState = atom({
+  key: `currentTabState${v4()}`,
+  default: 0,
+});
+
+export const searchValueState = atom({
+  key: `searchValueState${v4()}`,
+  default: "",
 });

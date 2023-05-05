@@ -21,6 +21,7 @@ import ChatDummy from "../../dummy/dummychat.json";
 import { useRecoilState } from "recoil";
 import { priorityState } from "../../states/atom";
 import prioritize from "../../hooks/prioritize";
+import DragContainer from "../../components/DragContainer/DragContainer";
 
 interface CDProps {
   id: number;
@@ -72,18 +73,12 @@ const ChatPage = () => {
     );
   }, [params.id]);
 
-  useEffect(() => {
-    console.log(priority);
-  }, [priority]);
-
   const RenderChat = ({ msg, chatFrom, chatClicked, time }: RCProps) => {
     let timeArr = time?.split(":");
     let daystring = time?.split("오")[0];
     let day = `${daystring?.split(".")[1]?.trim()}월 ${daystring
       .split(".")[2]
       ?.trim()}일`;
-
-    console.log(timeArr[0]?.split(".")[3]?.split(" ")[1]);
     let hour = Number(timeArr[0]?.split(" ")[1]);
     let min = Number(timeArr[1])?.toString().padStart(2, "0");
     let ampm = timeArr[0]?.split(".")[3]?.split(" ")[1];
@@ -120,6 +115,12 @@ const ChatPage = () => {
       setInputValid(false);
     }
     setInputValue(e.target.value);
+  };
+
+  const handleInputClick = (e: React.MouseEvent<HTMLTextAreaElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    inputRef.current?.focus();
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -161,61 +162,63 @@ const ChatPage = () => {
   };
 
   return (
-    <ChatPageContainer
-      priority={priority.indexOf("chat")}
-      onClick={() => setPriority(prioritize("chat", priority))}
-    >
-      <ChatTopBarDiv onClick={() => setChatClicked(!chatClicked)}>
-        <ChatTopBarBtnDiv>
-          <CircleBtn color="red" type="button" name="back" />
-          <CircleBtn color="yellow" type="button" />
-          <CircleBtn color="green" type="button" />
-        </ChatTopBarBtnDiv>
-        <ChatTopBarDescDiv>
-          {!chatClicked && (
-            <>
-              <ChatProfileImg src={chatData.img} />
-              {chatData.name}
-            </>
-          )}
-          {chatClicked && (
-            <>
-              <ChatProfileImg src={"/cat1.png"} />
-              문기
-            </>
-          )}
-        </ChatTopBarDescDiv>
-      </ChatTopBarDiv>
-      <ChatRoomMainDiv ref={mainRoomRef}>
-        {chatData.chat.map((chat) => {
-          return (
-            <RenderChat
-              key={chat.id}
-              msg={chat.msg}
-              chatFrom={chat.from}
-              chatClicked={chatClicked}
-              time={chat.time}
-            />
-          );
-        })}
-      </ChatRoomMainDiv>
-      <ChatRoomInputDiv onSubmit={handleSubmit} onKeyPress={handleEnterCheck}>
-        <ChatRoomInputTag
-          ref={inputRef}
-          value={inputValue}
-          onChange={handleInputChange}
-        />
-        <ChatRoomBottomDiv>
-          <ChatRoomBottomBtn
-            disabled={!inputValid}
-            inputValid={inputValid}
-            type="submit"
-          >
-            전송
-          </ChatRoomBottomBtn>
-        </ChatRoomBottomDiv>
-      </ChatRoomInputDiv>
-    </ChatPageContainer>
+    <DragContainer name="CHAT_PAGE">
+      <ChatPageContainer
+        onClick={() => setPriority(prioritize("CHAT_PAGE", priority))}
+      >
+        <ChatTopBarDiv onClick={() => setChatClicked(!chatClicked)}>
+          <ChatTopBarBtnDiv>
+            <CircleBtn color="red" type="button" name="back" />
+            <CircleBtn color="yellow" type="button" />
+            <CircleBtn color="green" type="button" />
+          </ChatTopBarBtnDiv>
+          <ChatTopBarDescDiv>
+            {!chatClicked && (
+              <>
+                <ChatProfileImg src={chatData.img} />
+                {chatData.name}
+              </>
+            )}
+            {chatClicked && (
+              <>
+                <ChatProfileImg src={"/cat1.png"} />
+                문기
+              </>
+            )}
+          </ChatTopBarDescDiv>
+        </ChatTopBarDiv>
+        <ChatRoomMainDiv ref={mainRoomRef}>
+          {chatData.chat.map((chat) => {
+            return (
+              <RenderChat
+                key={chat.id}
+                msg={chat.msg}
+                chatFrom={chat.from}
+                chatClicked={chatClicked}
+                time={chat.time}
+              />
+            );
+          })}
+        </ChatRoomMainDiv>
+        <ChatRoomInputDiv onSubmit={handleSubmit} onKeyPress={handleEnterCheck}>
+          <ChatRoomInputTag
+            ref={inputRef}
+            value={inputValue}
+            onChange={handleInputChange}
+            onClick={handleInputClick}
+          />
+          <ChatRoomBottomDiv>
+            <ChatRoomBottomBtn
+              disabled={!inputValid}
+              inputValid={inputValid}
+              type="submit"
+            >
+              전송
+            </ChatRoomBottomBtn>
+          </ChatRoomBottomDiv>
+        </ChatRoomInputDiv>
+      </ChatPageContainer>
+    </DragContainer>
   );
 };
 export default ChatPage;

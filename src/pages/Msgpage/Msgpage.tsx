@@ -19,10 +19,17 @@ import {
 import { FaCaretDown, FaSearch } from "react-icons/fa";
 
 import ChatDummy from "../../dummy/dummychat.json";
-import { useRecoilState } from "recoil";
-import { priorityState } from "../../states/atom";
+import { useRecoilState, useRecoilValue } from "recoil";
+import {
+  currentTabState,
+  priorityState,
+  searchValueState,
+} from "../../states/atom";
 import prioritize from "../../hooks/prioritize";
 import DragContainer from "../../components/DragContainer/DragContainer";
+import ChatMainPage from "../ChatMainPage/ChatMainPage";
+import ChatMorePage from "../ChatMorePage/ChatMorePage";
+import SearchContainer from "../../components/SearchContainer/SearchContainer";
 
 interface RMMProps {
   id: number;
@@ -34,7 +41,9 @@ interface RMMProps {
 
 const MsgPage = () => {
   const navigate = useNavigate();
+  const [searchOpen, setSearchOpen] = useState(false);
   const [priority, setPriority] = useRecoilState(priorityState);
+  const currentTab = useRecoilValue(currentTabState);
   const [clickedChat, setClickedChat] = useState<number>(-1);
 
   const handleClick = (e: React.MouseEvent<HTMLDivElement>, id: number) => {
@@ -45,16 +54,23 @@ const MsgPage = () => {
   };
 
   const handleDBClick = (id: number) => {
-    setTimeout(() => setPriority(prioritize("chat", priority)), 0);
+    setTimeout(() => setPriority(prioritize("CHAT_PAGE", priority)), 0);
     navigate("/chat/" + id);
   };
 
   const RenderMainMsg = ({ id, name, img, text, time }: RMMProps) => {
-    let timeArr = time.split(":");
-    let hour = Number(timeArr[0].split("T")[1]);
-    let min = Number(timeArr[1]);
-    let ampm = hour > 12 ? "오후" : "오전";
-    time = ampm + " " + hour + ":" + min;
+    let timeArr = time?.split(":");
+    let daystring = time?.split("오")[0];
+    let day = `${daystring?.split(".")[1]?.trim()}월 ${daystring
+      .split(".")[2]
+      ?.trim()}일`;
+    let hour = Number(timeArr[0]?.split(" ")[1]);
+    let min = Number(timeArr[1])?.toString().padStart(2, "0");
+    let ampm = timeArr[0]?.split(".")[3]?.split(" ")[1];
+    time =
+      daystring.trim() === new Date().toLocaleDateString().trim()
+        ? ampm + " " + hour + ":" + min
+        : day;
 
     return (
       <MainMsgContainer
@@ -76,12 +92,13 @@ const MsgPage = () => {
       <>
         <MainTopBarDiv>
           <MainTopBarSortBtn>
-            채팅 <FaCaretDown size={15} />
+            채팅 <FaCaretDown color="gray" size={15} />
           </MainTopBarSortBtn>
-          <MainTopBarIconBtn>
+          <MainTopBarIconBtn onClick={() => setSearchOpen(!searchOpen)}>
             <FaSearch />
           </MainTopBarIconBtn>
         </MainTopBarDiv>
+        {/* {searchOpen && <SearchContainer />} */}
         {ChatDummy.map((item) => {
           return (
             <RenderMainMsg
@@ -101,12 +118,17 @@ const MsgPage = () => {
   return (
     <DragContainer name="MESSENGER_PAGE">
       <MsgpageContainer
-        priority={priority.indexOf("messenger")}
-        onClick={() => setPriority(prioritize("messenger", priority))}
+        onClick={() => setPriority(prioritize("MESSENGER_PAGE", priority))}
       >
         <Sidebar />
         <MainContainer>
-          <RenderChatList />
+          {currentTab === 0 ? (
+            <ChatMainPage />
+          ) : currentTab === 1 ? (
+            <RenderChatList />
+          ) : (
+            <ChatMorePage />
+          )}
         </MainContainer>
       </MsgpageContainer>
     </DragContainer>

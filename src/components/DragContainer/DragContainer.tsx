@@ -1,6 +1,6 @@
 import { useSpring, animated } from "react-spring";
 import { useDrag } from "@use-gesture/react";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import React, { useEffect, useCallback } from "react";
 
 import {
@@ -9,6 +9,7 @@ import {
   TodoPagePositionState,
   MessengerPagePositionState,
   ChatPagePositionState,
+  priorityState,
 } from "../../states/atom";
 
 interface DCProps {
@@ -36,7 +37,7 @@ const savePositionToLocalStorage = (
   localStorage.setItem(key, JSON.stringify(value));
 };
 
-const DragContainer: React.FC<DCProps> = ({ name, children }) => {
+const DragContainer = ({ name, children }: DCProps) => {
   const [todoIconPosition, setTodoIconPosition] = useRecoilState(
     TodoIconPositionState
   );
@@ -52,6 +53,7 @@ const DragContainer: React.FC<DCProps> = ({ name, children }) => {
   const [chatPagePosition, setChatPagePosition] = useRecoilState(
     ChatPagePositionState
   );
+  const priority = useRecoilValue(priorityState);
 
   const positionMap: {
     [key: string]: [
@@ -82,10 +84,11 @@ const DragContainer: React.FC<DCProps> = ({ name, children }) => {
 
   useEffect(() => {
     Object.entries(positionMap).forEach(
-      ([key, [_, setStateFn, localStorageKey]]) => {
+      ([_, [_A, setStateFn, localStorageKey]]) => {
         setStateFn(getPositionFromLocalStorage(localStorageKey, [0, 0]));
       }
     );
+    console.log(priority);
   }, []);
 
   const onDrag = useCallback(
@@ -102,15 +105,30 @@ const DragContainer: React.FC<DCProps> = ({ name, children }) => {
     [name, pos.x, pos.y]
   );
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (
+      event.key === "ArrowUp" ||
+      event.key === "ArrowDown" ||
+      event.key === "ArrowLeft" ||
+      event.key === "ArrowRight"
+    ) {
+      event.preventDefault();
+    }
+  };
+
   const bindPos = useDrag(onDrag);
 
   return (
     <animated.div
       {...bindPos()}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
       style={{
         x: pos.x,
         y: pos.y,
         touchAction: "none",
+        position: "relative",
+        zIndex: priority.indexOf(name) === -1 ? 0 : priority.indexOf(name) + 1,
       }}
     >
       {children}
